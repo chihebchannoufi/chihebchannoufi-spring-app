@@ -2,15 +2,10 @@ package com.isikef.club.controller;
 
 import java.util.List;
 
+import com.isikef.club.forms.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.isikef.club.entities.Formation;
 import com.isikef.club.entities.ThemeFormation;
@@ -24,7 +19,7 @@ import jakarta.validation.Valid;
 @CrossOrigin (origins ="*", allowedHeaders = "*")
 
 public class FormationController {
-  @Autowired 
+  @Autowired
   FormationService formationService;
 
 
@@ -52,5 +47,13 @@ public class FormationController {
     return formationService.getFormationsByTheme(theme);
   }
 
+  @GetMapping("/search/{theme}")
+  public List<Formation>searchByTheme(@PathVariable String theme) {
+    return formationService.getFormationsByTheme(theme);
+  }
+  @GetMapping("/pagination")
+  public ResponseEntity<?> getFormationWithPagination(@ModelAttribute PageParams pageParams) {
+    return ResponseEntity.ok(formationService.getFormationsWithPagination(pageParams));
+  }
 
 }

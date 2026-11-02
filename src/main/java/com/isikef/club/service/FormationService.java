@@ -4,6 +4,8 @@ import java.util.List;
 import com.isikef.club.entities.Formation;
 import com.isikef.club.entities.ThemeFormation;
 import com.isikef.club.forms.FormFormation;
+import com.isikef.club.forms.PageParams;
+import org.springframework.data.domain.Page;
 
 public interface FormationService {
     public Formation createFormation(FormFormation Form);
@@ -13,5 +15,6 @@ public interface FormationService {
     public List<Formation> getAllFormations();
     public List<Formation> getFormationsByTheme(String theme);
     List<Formation> getFormationsByTheme(ThemeFormation theme);
+    Page<Formation> getFormationsWithPagination(PageParams pageParams);
 
 }

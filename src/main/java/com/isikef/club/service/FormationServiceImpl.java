@@ -2,6 +2,7 @@ package com.isikef.club.service;
 
 import java.util.List;
 
+import com.isikef.club.forms.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.isikef.club.entities.Club;
 import com.isikef.club.entities.Formation;
@@ -9,9 +10,13 @@ import com.isikef.club.entities.ThemeFormation;
 import com.isikef.club.forms.FormFormation; 
 import com.isikef.club.repository.ClubRepository;
 import com.isikef.club.repository.FormationRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
+@Service
 public class FormationServiceImpl implements FormationService {
 
   @Autowired 
@@ -81,8 +86,17 @@ public class FormationServiceImpl implements FormationService {
         throw new UnsupportedOperationException("Unimplemented method 'getFormationsByTheme'");
     }
 
+  @Override
+  public Page<Formation> getFormationsWithPagination(PageParams pageParams) {
+    Pageable pageable = PageRequest.of(
+            pageParams.getPage(),
+            pageParams.getSize());
+            Sort.by(Sort.Direction.ASC, "FORMATION_THEME");
+    return formationRepository.findAll(pageable);
+  }
 
-    @Override
+
+  @Override
     public List<Formation> getFormationsByTheme(String theme) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getFormationsByTheme'");
